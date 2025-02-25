@@ -18,9 +18,6 @@ if not API_KEY:
 
 genai.configure(api_key=API_KEY)
 
-# Set Poppler path for pdf2image
-POPPLER_PATH = r"C:\Program Files (x86)\poppler\Library\bin"
-
 def get_gemini_response(input_text, pdf_content, prompt):
     """Generate a response using Google Gemini API."""
     model = genai.GenerativeModel('gemini-1.5-flash')
@@ -31,7 +28,7 @@ def input_pdf_setup(uploaded_file):
     """Convert first page of uploaded PDF to an image and encode as base64."""
     if uploaded_file is not None:
         uploaded_file.seek(0)  # Reset file pointer
-        images = pdf2image.convert_from_bytes(uploaded_file.read(), poppler_path=POPPLER_PATH)
+        images = pdf2image.convert_from_bytes(uploaded_file.read())  # Removed poppler_path
         first_page = images[0]
 
         # Convert image to bytes
